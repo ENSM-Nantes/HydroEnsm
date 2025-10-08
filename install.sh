@@ -4,7 +4,9 @@
 sudo apt install -y git gcc g++ make cmake gfortran pip python3 python3-pip liblapack-dev libblas-dev 
 
 #Clone CN-Aeromodels
-git clone https://gitlab.com/lheea/CN-AeroModels
+if [ ! -d "CN-AeroModels" ]; then
+    git clone https://gitlab.com/lheea/CN-AeroModels
+fi
 
 #Build CN-Aeromodels
 cd CN-AeroModels
@@ -13,12 +15,17 @@ cmake --build build
 cd -
 
 #Clone OpenFast
-git clone https://github.com/OpenFAST/r-test
-git clone https://github.com/OpenFAST/openfast
+if [ ! -d "r-test" ]; then
+    git clone https://github.com/OpenFAST/r-test
+fi
 
+if [ ! -d "openfast" ]; then
+    git clone https://github.com/OpenFAST/openfast
+fi
+    
 #Build OpenFast
 cd openfast
-mkdir build; cd build;
+mkdir -p build; cd build;
 cmake ..
 make openfast; make install
 cd ../../
