@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Dependencies
-sudo apt install -y git gcc g++ make cmake gfortran pip python3 python3-pip liblapack-dev libblas-dev 
+sudo apt install -y git gcc g++ make cmake gfortran pip python3 python3-pip liblapack-dev libblas-dev geany paraview tree
 
 #Clone CN-Aeromodels
 if [ ! -d "CN-AeroModels" ]; then
