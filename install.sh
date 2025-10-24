@@ -2,6 +2,10 @@
 
 #Dependencies
 sudo apt install -y git gcc g++ make cmake gfortran pip python3 python3-pip liblapack-dev libblas-dev geany paraview tree
+sudo snap install pycharm-community --classic
+
+#Salome
+
 
 #Clone CN-Aeromodels
 if [ ! -d "CN-AeroModels" ]; then
