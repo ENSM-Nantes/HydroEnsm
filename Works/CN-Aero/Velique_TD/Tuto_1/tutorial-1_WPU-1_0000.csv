@@ -1,0 +1,4 @@
+Center_x(m);Center_y(m);Center_z(m);AWA(degrees);AWS(degrees);Re;AoA(degrees)/SR;Cl;Cd;Cm;Cpower;circulation;FreeStream_x(m/s);FreeStream_y(m/s);FreeStream_z(m/s);MotionInducedVelocity_x(m/s);MotionInducedVelocity_y(m/s);MotionInducedVelocity_z(m/s);FlowInducedVelocity_x(m/s);FlowInducedVelocity_y(m/s);FlowInducedVelocity_z(m/s);ApparentVelocity_x(m/s);ApparentVelocity_y(m/s);ApparentVelocity_z(m/s);dForce_x(N);dForce_y(N);dForce_z(N);|dForce|(N);
+0;0;-2.21058;-55.008;12.5581;1.14338e+07;-20.608;-1.61114;0.0629075;0;0;-111.281;6.29958e-16;10.288;0;-7.2016;-0;-0;0;0;0;-7.2016;10.288;0;11254;8550.91;0;14134;
+0;0;-16.5;-55.008;12.5581;1.14338e+07;-20.608;-1.61114;0.0629075;0;0;-111.281;6.29958e-16;10.288;0;-7.2016;-0;-0;0;0;0;-7.2016;10.288;0;22508;17101.8;0;28268;
+0;0;-30.7894;-55.008;12.5581;1.14338e+07;-20.608;-1.61114;0.0629075;0;0;-111.281;6.29958e-16;10.288;0;-7.2016;-0;-0;0;0;0;-7.2016;10.288;0;11254;8550.91;0;14134;

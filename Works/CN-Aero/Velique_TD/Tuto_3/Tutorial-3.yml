@@ -1,0 +1,307 @@
+rotations convention: [psi, theta', phi''] 
+
+environmental constants:
+    g: {value: 9.8067, unit: m/s^2}
+    rho: {value: 1025., unit: kg/m^3}
+    nu: {value: 1.48e-5, unit: m^2/s}
+    air rho: {value: 1.225, unit: kg/m^2}
+
+environment models:
+  - model: uniform wind
+    velocity: {unit: m/s, value: 25.}
+    direction: {unit: deg, value: 195.}
+    output:
+        frame of reference: NED
+        mesh:
+            xmin: {value: -5., unit: m}
+            xmax: {value: 5., unit: m}
+            nx: 5
+            ymin: {value: -1.75, unit: m}
+            ymax: {value: 1.75, unit: m}
+            ny: 3
+            zmin: {value: 0, unit: m}
+            zmax: {value: -2.4, unit: m}
+            nz: 5
+  - model: no waves
+    constant sea elevation in NED frame: {value: 0, unit: m}
+    
+bodies: # All bodies have NED as parent frame
+  - name: ship
+    position of body frame relative to mesh:
+        frame: mesh
+        x: {value: 0., unit: m}
+        y: {value: 0, unit: m}
+        z: {value: 0., unit: m}
+        phi: {value: 3.1415926535, unit: rad}
+        theta: {value: 0, unit: rad}
+        psi: {value: 0, unit: rad}
+    initial position of body frame relative to NED:
+        frame: NED
+        x: {value: 0., unit: m}
+        y: {value: 0., unit: m}
+        z: {value: 0., unit: m}
+        phi: {value: 0, unit: rad}
+        theta: {value: 0, unit: rad}
+        psi: {value: 0, unit: rad}
+    initial velocity of body frame relative to NED:
+        frame: ship
+        u: {value: 0, unit: m/s}
+        v: {value: 0, unit: m/s}
+        w: {value: 0, unit: m/s}
+        p: {value: 0, unit: rad/s}
+        q: {value: 0, unit: rad/s}
+        r: {value: 0, unit: rad/s}
+    dynamics:
+        hydrodynamic forces calculation point in body frame:
+            x: {value: 0., unit: m}
+            y: {value: 0., unit: m}
+            z: {value: 0., unit: m}
+        centre of inertia:
+            frame: ship
+            x: {value: 0, unit: m}
+            y: {value: 0, unit: m}
+            z: {value: 0., unit: m}
+        rigid body inertia matrix at the center of gravity and projected in the body frame:
+            row 1: [1E6,0,0,0,0,0]
+            row 2: [0,1E6,0,0,0,0]
+            row 3: [0,0,1E6,0,0,0]
+            row 4: [0,0,0,1E6,0,0]
+            row 5: [0,0,0,0,1E6,0]
+            row 6: [0,0,0,0,0,1E6]
+        added mass matrix at the center of gravity and projected in the body frame:
+            row 1: [0,0,0,0,0,0]
+            row 2: [0,0,0,0,0,0]
+            row 3: [0,0,0,0,0,0]
+            row 4: [0,0,0,0,0,0]
+            row 5: [0,0,0,0,0,0]
+            row 6: [0,0,0,0,0,0]
+    external forces:
+      - model: nonlinear lifting line
+        name: test 9
+        options:
+            verbose: false
+            useAWSsquare: false
+        plane of symmetry:
+            point:
+                x: {value: 0., unit: m}
+                y: {value: 0., unit: m}
+                z: {value: 0., unit: m}
+            normal vector:
+                x: {value: 0., unit: m}
+                y: {value: 0., unit: m}
+                z: {value: -1., unit: m}
+            frame: ship
+        wind propulsion system:
+          - name: sail_1
+            geometry: 3D
+            data:
+              - element: 1
+                center:
+                    x: {value: 0.864, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: 0., unit: m}
+                chord: {value: 0.463, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 2
+                center:
+                    x: {value: 0.8630, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.2585, unit: m}
+                chord: {value: 0.4599, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 3
+                center:
+                    x: {value: 0.86105, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.431, unit: m}
+                chord: {value: 0.4517, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 4
+                center:
+                    x: {value: 0.85735, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.6035, unit: m}
+                chord: {value: 0.4364, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 5
+                center:
+                    x: {value: 0.8524, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.776, unit: m}
+                chord: {value: 0.4160, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 6
+                center:
+                    x: {value: 0.84525, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.948, unit: m}
+                chord: {value: 0.3863, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 7
+                center:
+                    x: {value: 0.8339, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -1.1205, unit: m}
+                chord: {value: 0.3393, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 8
+                center:
+                    x: {value: 0.8172, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -1.379, unit: m}
+                chord: {value: 0.2698, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+          - name: sail_2
+            geometry: 3D
+            data:
+              - element: 1
+                center:
+                    x: {value: 0.116, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: 0., unit: m}
+                chord: {value: 0.463, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 2
+                center:
+                    x: {value: 0.115, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.2585, unit: m}
+                chord: {value: 0.4599, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 3
+                center:
+                    x: {value: 0.11305, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.431, unit: m}
+                chord: {value: 0.4517, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 4
+                center:
+                    x: {value: 0.1093, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.6035, unit: m}
+                chord: {value: 0.4364, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 5
+                center:
+                    x: {value: 0.1044, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.776, unit: m}
+                chord: {value: 0.4160, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 6
+                center:
+                    x: {value: 0.09725, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.948, unit: m}
+                chord: {value: 0.3863, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 7
+                center:
+                    x: {value: 0.0859, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -1.1205, unit: m}
+                chord: {value: 0.3393, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 8
+                center:
+                    x: {value: 0.0594, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -1.379, unit: m}
+                chord: {value: 0.2698, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+          - name: sail_3
+            geometry: 3D
+            data:
+              - element: 1
+                center:
+                    x: {value: -0.632, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: 0., unit: m}
+                chord: {value: 0.463, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml            
+              - element: 2
+                center:
+                    x: {value: -0.633, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.2585, unit: m}
+                chord: {value: 0.4599, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 3
+                center:
+                    x: {value: -0.63495, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.431, unit: m}
+                chord: {value: 0.4517, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 4
+                center:
+                    x: {value: -0.63865, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.6035, unit: m}
+                chord: {value: 0.4364, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 5
+                center:
+                    x: {value: -0.6436, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.776, unit: m}
+                chord: {value: 0.4160, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 6
+                center:
+                    x: {value: -0.65075, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -0.948, unit: m}
+                chord: {value: 0.3863, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 7
+                center:
+                    x: {value: -0.6621, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -1.1205, unit: m}
+                chord: {value: 0.3393, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+              - element: 8
+                center:
+                    x: {value: -0.6788, unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -1.379, unit: m}
+                chord: {value: 0.2698, unit: m}                
+                foil data: 
+                  - file: NACA0015.yml
+commands:
+  - name: sail_1
+    t: [0, 100]
+    setting: {unit: deg, values: [-5., -5.]}
+  - name: sail_2
+    t: [0, 100]
+    setting: {unit: deg, values: [-10., 10.]}
+  - name: sail_3
+    t: [0, 100]
+    setting: {unit: deg, values: [-15., -15.]}
+ 
+

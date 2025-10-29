@@ -1,0 +1,103 @@
+rotations convention: [psi, theta', phi''] 
+
+environmental constants:
+    g: {value: 9.8067, unit: m/s^2}
+    rho: {value: 1025., unit: kg/m^3}
+    nu: {value: 1.48e-5, unit: m^2/s}
+    air rho: {value: 1.225, unit: kg/m^2}
+
+environment models:
+  - model: uniform wind
+    velocity: {unit: m/s, value: 10.288}
+    direction: {unit: deg, value: 90.}
+    output:
+        frame of reference: NED
+        mesh:
+            xmin: {value: -50, unit: m}
+            xmax: {value: 50, unit: m}
+            nx: 5
+            ymin: {value: -50, unit: m}
+            ymax: {value: 50, unit: m}
+            ny: 3
+            zmin: {value: 0, unit: m}
+            zmax: {value: -100, unit: m}
+            nz: 5
+    
+bodies: # All bodies have NED as parent frame
+  - name: ship
+    position of body frame relative to mesh:
+        frame: mesh
+        x: {value: 0., unit: m}
+        y: {value: 0, unit: m}
+        z: {value: 0., unit: m}
+        phi: {value: 3.1415926535, unit: rad}
+        theta: {value: 0, unit: rad}
+        psi: {value: 0, unit: rad}
+    initial position of body frame relative to NED:
+        frame: NED
+        x: {value: 0., unit: m}
+        y: {value: 0., unit: m}
+        z: {value: 0., unit: m}
+        phi: {value: 0, unit: rad}
+        theta: {value: 0, unit: rad}
+        psi: {value: 0, unit: rad}
+    initial velocity of body frame relative to NED:
+        frame: ship
+        u: {value: 7.2016, unit: m/s}
+        v: {value: 0, unit: m/s}
+        w: {value: 0, unit: m/s}
+        p: {value: 0, unit: rad/s}
+        q: {value: 0, unit: rad/s}
+        r: {value: 0, unit: rad/s}
+    dynamics:
+        hydrodynamic forces calculation point in body frame:
+            x: {value: 0., unit: m}
+            y: {value: 0., unit: m}
+            z: {value: 0., unit: m}
+        centre of inertia:
+            frame: ship
+            x: {value: 0, unit: m}
+            y: {value: 0, unit: m}
+            z: {value: 0., unit: m}
+        rigid body inertia matrix at the center of gravity and projected in the body frame:
+            row 1: [1E6,0,0,0,0,0]
+            row 2: [0,1E6,0,0,0,0]
+            row 3: [0,0,1E6,0,0,0]
+            row 4: [0,0,0,1E6,0,0]
+            row 5: [0,0,0,0,1E6,0]
+            row 6: [0,0,0,0,0,1E6]
+        added mass matrix at the center of gravity and projected in the body frame:
+            row 1: [0,0,0,0,0,0]
+            row 2: [0,0,0,0,0,0]
+            row 3: [0,0,0,0,0,0]
+            row 4: [0,0,0,0,0,0]
+            row 5: [0,0,0,0,0,0]
+            row 6: [0,0,0,0,0,0]
+    external forces:
+      - name: tutorial-1
+        model: strip theory
+        control: commands
+        wind propulsion system:
+          - name: WPU-1
+            geometry: uniform
+            data:
+                root:
+                    x: {value: 0., unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: 0., unit: m}
+                tip:
+                    x: {value: 0., unit: m}
+                    y: {value: 0., unit: m}
+                    z: {value: -33., unit: m}
+                aspect ratio: 3.
+                discretization: 
+                    number of elements: 3
+                foil data: 
+                  - file: NACA0015.yml
+
+commands:
+  - name: WPU-1
+    t: [0, 100]
+    setting: {unit: deg, values: [34.4, 34.4]}
+ 
+
